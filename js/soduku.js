@@ -50,6 +50,49 @@ function isGrey(x, y) {
 
 function solve() {
   "use strict";
+
+  var body = document.getElementsByTagName("body")[0];
+  var tbl = body.getElementsByTagName("table")[0];
   var mySuduko = new Soduku(tableToMat(tbl));
+
+  var taken;
+  for (var i=0; i < 9; i++) {
+    for (var j=0; j < 9; j++) {
+      taken = mySuduko.taken(i, j);
+      console.log(taken);
+    }
+  }
+
+}
+
+function populate() {
+  "use strict";
+
+  var matrix = [
+    [7, 1, 0, 5, 0, 2, 6, 4, 0],
+    [5, 0, 2, 0, 0, 1, 3, 0, 7],
+    [0, 0, 0, 0, 6, 7, 0, 0, 5],
+    [6, 0, 0, 0, 7, 0, 2, 0, 9],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 5, 2, 9, 0, 0, 0, 4],
+    [4, 0, 0, 7, 2, 0, 0, 0, 0],
+    [9,0, 1, 6, 0, 0, 4, 0, 2,],
+    [0, 2, 6, 1, 0, 9, 0, 7, 3]
+  ];
+
+  var body = document.getElementsByTagName("body")[0];
+  var table = body.getElementsByTagName("table")[0];
+  var tbody = table.getElementsByTagName("tbody")[0];
+  var rows = tbody.getElementsByTagName("tr");
+
+  for (var i=0; i < 9; i++) {
+    var row = rows[i];
+    var cells = row.getElementsByTagName("td");
+    for (var j=0; j < 9; j++) {
+      var cell = cells[j];
+      var inputField = cell.getElementsByTagName("input")[0];
+      inputField.value = matrix[i][j];
+    }
+  }
 
 }

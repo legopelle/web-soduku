@@ -59,12 +59,14 @@ Soduku.prototype = {
   },
   taken: function (row, col) {
     "use strict";
-    var list = [];
     
-    var taken = _.union(this.boxTaken(), this.rowTaken());
-    taken = _.union(this.taken(), this.colTaken());
-    //Remove duplicates
-    var value;
+    var takenRow = this.rowTaken(row);
+    var takenCol = this.colTaken(col);
+    var takenBox = this.boxTaken(row, col);
+    console.log(takenRow);
+    console.log(takenCol);
+    console.log(takenBox);
+    
     }
 
 };
@@ -74,23 +76,23 @@ function tableToMat(table) {
   var mat = [];
   var rowArray;
 
-  var tbody = table.childNodes[0];
+  var tbody = table.getElementsByTagName("tbody")[0];
 
-  var rows = tbody.childNodes;
+  var rows = tbody.getElementsByTagName("tr");
   var row;
   var cells;
   for(var i = 0; i < rows.length; i++) {
     rowArray = [];
     row = rows[i];
 
-    cells = row.childNodes;
+    cells = row.getElementsByTagName("td");
     var cell;
     var inputField;
     var value;
     for (var j = 0; j < cells.length; j++) {
       cell = cells[j];
-      inputField = cell.childNodes[0];
-      value = inputField.data;
+      inputField = cell.getElementsByTagName("input");
+      value = inputField.value;
       rowArray.push(value);
     }
     mat.push(rowArray);

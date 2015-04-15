@@ -4,7 +4,11 @@ table {
 
 td {
   border: 1px solid #999;
-  width: 40px;
-  height: 40px;
+  width: 4em;
+  height: 4em;
   text-align: center;
+}
+
+input {
+  width:2em;
 }

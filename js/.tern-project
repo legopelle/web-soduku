@@ -1,0 +1,15 @@
+{
+  "libs": [
+    "browser",
+    "underscore"
+  ],
+  "loadEagerly": [
+    "sodukuClass.js"
+  ],
+  "plugins": {
+    "requirejs": {
+      "baseURL": "./",
+      "paths": {}
+    }
+  }
+}

@@ -59,7 +59,6 @@ function solve() {
   for (var i=0; i < 3; i++) {
     for (var j=0; j < 3; j++) {
       taken = mySuduko.boxTaken(i, j);
-      console.log(taken);
     }
   }
 }
@@ -90,7 +89,10 @@ function populate() {
     for (var j=0; j < 9; j++) {
       var cell = cells[j];
       var inputField = cell.getElementsByTagName("input")[0];
-      inputField.value = matrix[i][j];
+
+      if (matrix[i][j] != 0) {
+        inputField.value = matrix[i][j];
+      }
     }
   }
 

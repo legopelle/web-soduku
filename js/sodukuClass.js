@@ -1,15 +1,8 @@
 /* jshint strict: true */
 
-function Soduku(mat) {
-  "use strict";
-  this.mat = mat;
-
-  //Legal digits
-  this.numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-}
-
 Soduku.prototype = {
   constructor: Soduku,
+  numbers: [1, 2, 3, 4, 5, 6, 7, 8, 9],
   rowTaken: function(row) {
     "use strict";
 
@@ -84,6 +77,27 @@ Soduku.prototype = {
 
 };
 
+function Soduku(mat) {
+  "use strict";
+
+  this.empty = [];
+  this.mat = mat;
+
+  var available;
+  for(var i=0; i < 9; i++) {
+    for (var j=0; j < 9; j++) {
+
+      if (this.mat[i][j] === 0) {
+        available = _.difference(numbers, this.taken(i,j));
+        this.empty.push([i, j, available]);
+      }
+    }
+  }
+  console.log(this.mat);
+  console.log(empty);
+
+}
+
 function tableToMat(table) {
   "use strict";
   var mat = [];
@@ -109,8 +123,12 @@ function tableToMat(table) {
       cell = cells[j];
       inputField = cell.getElementsByTagName("input")[0];
       value = parseInt(inputField.value, 10);
-
+      
+      if (value <= 9 && value >= 1) {
       rowArray.push(value);
+      } else {
+        rowArray.push(0);
+      }
     }
     mat.push(rowArray);
   }

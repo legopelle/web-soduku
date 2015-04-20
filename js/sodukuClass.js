@@ -2,8 +2,8 @@
 
 Soduku.prototype = {
   constructor: Soduku,
-  numbers: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-  rowTaken: function(row) {
+  NUMBERS: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+  rowTaken: function(row, col) {
     "use strict";
 
     var list = [];
@@ -19,7 +19,7 @@ Soduku.prototype = {
 
     return list;
   },
-  colTaken: function(col) {
+  colTaken: function(row, col) {
     "use strict";
 
     var list = [];
@@ -42,10 +42,10 @@ Soduku.prototype = {
 
     var list = [];
 
-    var rowmin = subrow;
+    var rowmin = subrow * 3;
     var rowmax = rowmin + 2;
 
-    var colmin = subcol;
+    var colmin = subcol * 3;
     var colmax = colmin + 2;
 
     var value;
@@ -64,8 +64,8 @@ Soduku.prototype = {
   taken: function (row, col) {
     "use strict";
 
-    var takenRow = this.rowTaken(row);
-    var takenCol = this.colTaken(col);
+    var takenRow = this.rowTaken(row, col);
+    var takenCol = this.colTaken(col, col);
     var takenBox = this.boxTaken(row, col);
 
     var union = _.union(takenRow, takenCol);
@@ -73,8 +73,15 @@ Soduku.prototype = {
 
     return union;
 
-  }
+  },
+  available: function (row, col) {
+    "use strict";
 
+    var taken = this.taken(row, col);
+    var available = _.difference(this.NUMBERS, taken);
+
+    return available;
+  }
 };
 
 function Soduku(mat) {
@@ -88,13 +95,11 @@ function Soduku(mat) {
     for (var j=0; j < 9; j++) {
 
       if (this.mat[i][j] === 0) {
-        available = _.difference(numbers, this.taken(i,j));
+        available = this.available(i, j);
         this.empty.push([i, j, available]);
       }
     }
   }
-  console.log(this.mat);
-  console.log(empty);
 
 }
 

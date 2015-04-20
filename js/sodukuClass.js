@@ -10,26 +10,34 @@ function Soduku(mat) {
 
 Soduku.prototype = {
   constructor: Soduku,
-  rowTaken:function(row) {
-    "use strict"; 
+  rowTaken: function(row) {
+    "use strict";
+
     var list = [];
-    
+    var value;
+
     for (var i = 0; i < 9; i++) {
-      var value = this.mat[row][i];
-      
-      list.push(value);
-      
+      value = this.mat[row][i];
+
+      if (value <= 9 && value >= 1) {
+        list.push(value);
+      }
     }
+
     return list;
   },
-  colTaken:function(col) {
+  colTaken: function(col) {
     "use strict";
+
     var list = [];
+    var value;
 
     for (var i = 0; i < 9; i++) {
-      var value = this.mat[i][col];
+      value = this.mat[i][col];
 
-      list.push(value);
+      if (value <= 9 && value >= 1) {
+        list.push(value);
+      }
 
     }
     return list;
@@ -51,7 +59,10 @@ Soduku.prototype = {
     for (var i=rowmin; i <= rowmax; i++) {
       for (var j=colmin; j <= colmax; j++) {
         value = this.mat[i][j];
-        list.push(value);
+
+        if (value <= 9 && value >= 1) {
+          list.push(value);
+        }
       }
     }
 
@@ -59,15 +70,17 @@ Soduku.prototype = {
   },
   taken: function (row, col) {
     "use strict";
-    
+
     var takenRow = this.rowTaken(row);
     var takenCol = this.colTaken(col);
     var takenBox = this.boxTaken(row, col);
-    console.log(takenRow);
-    console.log(takenCol);
-    console.log(takenBox);
-    
-    }
+
+    var union = _.union(takenRow, takenCol);
+    union = _.union(union, takenBox);
+
+    return union;
+
+  }
 
 };
 
@@ -75,6 +88,9 @@ function tableToMat(table) {
   "use strict";
   var mat = [];
   var rowArray;
+
+  var msg = document.getElementById("msg");
+  msg.innerHTML = "";
 
   var tbody = table.getElementsByTagName("tbody")[0];
 
@@ -91,8 +107,9 @@ function tableToMat(table) {
     var value;
     for (var j = 0; j < cells.length; j++) {
       cell = cells[j];
-      inputField = cell.getElementsByTagName("input");
-      value = inputField.value;
+      inputField = cell.getElementsByTagName("input")[0];
+      value = parseInt(inputField.value, 10);
+
       rowArray.push(value);
     }
     mat.push(rowArray);

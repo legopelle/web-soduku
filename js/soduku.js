@@ -3,6 +3,7 @@
 (function() {
   "use strict"; 
   var body = document.getElementsByTagName("body")[0];
+  var tableDiv = document.getElementById("tablediv");
 
   var tbl = document.createElement("table");
   var tblBody = document.createElement("tbody");
@@ -12,13 +13,12 @@
 
     for (var j=0; j < 9; j++) {
 
-      //var value = Math.floor(10 * Math.random());
-      //console.log(value);
-      //console.log(value.toString());
-
       var cell = document.createElement("td");
       //cellText = document.createTextNode(value.toString());
       var cellInput = document.createElement("input");
+      cellInput.setAttribute("type", "text");
+      //cellInput.setAttribute("min", 1);
+      //cellInput.setAttribute("max", 9);
 
       cell.style.backgroundColor = isGrey(i, j) ? "LavenderBlush" : "Gainsboro";
 
@@ -31,7 +31,7 @@
   }
 
   tbl.appendChild(tblBody);
-  body.appendChild(tbl);
+  tableDiv.appendChild(tbl);
 
 
 })();
@@ -56,13 +56,12 @@ function solve() {
   var mySuduko = new Soduku(tableToMat(tbl));
 
   var taken;
-  for (var i=0; i < 9; i++) {
-    for (var j=0; j < 9; j++) {
-      taken = mySuduko.taken(i, j);
+  for (var i=0; i < 3; i++) {
+    for (var j=0; j < 3; j++) {
+      taken = mySuduko.boxTaken(i, j);
       console.log(taken);
     }
   }
-
 }
 
 function populate() {

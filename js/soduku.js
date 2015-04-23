@@ -3,10 +3,11 @@
 (function() {
   "use strict";
 
-  var body = document.getElementsByTagName("body")[0];
-  var tableDiv = document.getElementById("tablediv");
+  var lightBox = 240;
+  var darkBox = 230;
+  var boxVariance = 5;
 
-  var tbl = document.createElement("table");
+  var tbl = document.getElementById("sodukuTable");
   var tblBody = document.createElement("tbody");
   tblBody.setAttribute("id", "tablebody");
 
@@ -19,11 +20,20 @@
       //cellText = document.createTextNode(value.toString());
       var cellInput = document.createElement("input");
       cellInput.setAttribute("type", "text");
+      cellInput.setAttribute("id", i + "," + j);
       //cellInput.setAttribute("min", 1);
       //cellInput.setAttribute("max", 9);
 
-      cell.style.backgroundColor = isGrey(i, j) ? "LavenderBlush" : "Gainsboro";
+      var evenColor = rgbToString(lightBox, lightBox, lightBox);
+      var oddColor = rgbToString(darkBox, darkBox, darkBox);
 
+      $(cell).addClass(isEvenBox(i, j) ? 'even' : 'odd');
+      /*
+         if (isEven(i, j)) {
+         var color = cell.style.backgroundColor;
+         cell.style.backgroundColor = makeLighter(color);
+         }
+         */
       cell.appendChild(cellInput);
       row.appendChild(cell);
     }
@@ -33,29 +43,45 @@
   }
 
   tbl.appendChild(tblBody);
-  tableDiv.appendChild(tbl);
 
-
+  $("td").hover(
+    function() {
+      $(this).addClass('highlight', 1, 'linear');
+    },
+    function() {
+      $(this).removeClass('highlight', 1, 'linear');
+    }
+  );
+ /* 
+  $("tr").hover(
+    function() {
+      $(this).addClass('highlight', 1);
+    },
+    function() {
+      $(this).removeClass('highlight', 0.5);
+    }
+  );
+*/
 })();
 
-function isGrey(x, y) {
+function isEven(i, j) {
   "use strict";
-  var r = Math.floor(x / 3.0);
-  var c = Math.floor(y / 3.0);
 
-  if (Math.pow(-1, r + c)  == 1) {
+  if (Math.pow(-1, i+j) == 1) {
     return 1;
   } else {
     return 0;
   }
 }
 
-function sleep(miliseconds) {
-  var currentTime = new Date().getTime();
+function isEvenBox(x, y) {
+  "use strict";
+  var r = Math.floor(x / 3.0);
+  var c = Math.floor(y / 3.0);
 
-  while (currentTime + miliseconds >= new Date().getTime()) {
-  }
+  return isEven(r, c);
 }
+
 
 function getTableInputs() {
   "use strict";
@@ -88,8 +114,7 @@ function solve() {
   "use strict";
 
   // Create Soduku object from table
-  var body = document.getElementsByTagName("body")[0];
-  var tbl = body.getElementsByTagName("table")[0];
+  var tbl = document.getElementById("sodukuTable");
   var mySuduko = new Soduku(tableToMat(tbl));
 
   // References to input fields
@@ -126,6 +151,20 @@ function solve() {
     unsolved = mySuduko.empty.length;
   }
 
+}
+
+function unsolve() {
+  "use strict";
+
+  var tableInputs = getTableInputs();
+
+  for(var i=0; i < 9; i++) {
+    for (var j=0; j < 9; j++) {
+      if (tableInputs[i][j].style.color === "red") {
+        tableInputs[i][j].value = "";
+      }
+    }
+  }
 }
 
 function setValue(input, value, color) {
@@ -167,4 +206,31 @@ function populate() {
     }
   }
 
+}
+
+function rgbToString(r, g, b) {
+  "use strict";
+
+  return "rgb(" + r + "," + g + "," + b + ")";
+}
+
+function stringToRgb(rgb) {
+  "use strict";
+
+  var re = /rgb\((\d+),\s+(\d+),\s+(\d+)\)/;
+  var result = re.exec(rgb);
+
+  return result.slice(1,4);
+}
+
+function makeLighter(rgb) {
+  "use strict";
+
+  var color = stringToRgb(rgb);
+
+  //for(var i=0; i < 3; i++) {
+  color[2] = parseInt(color[2], 10) - 10;
+  //}
+
+  return rgbToString(color[0], color[1], color[2]);
 }

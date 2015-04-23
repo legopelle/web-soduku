@@ -1,7 +1,8 @@
 {
   "libs": [
     "browser",
-    "underscore"
+    "underscore",
+    "jquery"
   ],
   "loadEagerly": [
     "sodukuClass.js"

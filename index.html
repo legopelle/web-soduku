@@ -1,25 +1,117 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Soduku Solver</title>
-    <meta charset="UTF-8"/>
-    <link rel="stylesheet" type="text/css" href="soduku.css">
-  </head>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <body>
-    <div id="innerCenter" style="display:flex;height:100%;justify-content:center;align-items:center;">
-      <div id="tablediv" style="display:table-row;">
+  <title>Sokuku solver</title>
+
+  <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="./js/jquery-ui-1.11.4.custom/jquery-ui.min.css" type="text/css" media="all" />
+  <link rel="stylesheet" type="text/css" href="soduku.css"i>
+
+</head>
+<body>
+  <div class="container">
+
+    <div class="row">
+
+      <div class="col-md-8">
+	<div class="page-header">
+	  <h1>Soduku solver.</h1>
+	  <p class="lead">Simple soduku solver<br>in <em>your</em> browser!</p>
+	</div>
+
+	<div id="innerCenter" style="display:flex;height:100%;justify-content:center;align-items:center;">
+	  <div id="tablediv" style="display:table-row;">
+
+	    <table id="sodukuTable"></table>
+
+
+	  </div>
+	</div>
+
+	<p class="lead" id="msg"></p>
       </div>
 
-      <div style="display:table-row;align:center;">
-	<button onclick="solve()">Solve me!</button>
-	<button onclick="populate()">Populate me!</button>
-	<p id="msg"></p>
-      </div>
-    </div>
-  </body>
+      <div class="col-md-4">
+	<h1>Controls</h1>
+	<p>Use these controls to manipulate the Soduku!</p>
 
+	<div class="panel panel-default">
+	  <div class="panel-heading">
+	    <h3>Solver <small>controls</small></h3>
+	  </div>
+	  <div class="panel-body">
+	    <button type="button" class="btn btn-primary btn-lg btn-block" onclick="solve()">Solve it!</button>
+	    <button type="button" class="btn btn-default btn-lg btn-block" onclick="unsolve()">Unsolve it!</button> 
+	  </div>	
+	</div>
+
+	<div class="panel panel-default">
+	  <div class="panel-heading">
+	    <h3>Testing <small>controls</small></h3>
+	  </div>
+	  <div class="panel-body">
+	    <button type="button" class="btn btn-default btn-lg btn-block" onclick="populate()">Populate it!</button>
+
+	  </div>
+	</div>
+
+	<div class="panel panel-default">
+	  <div class="panel-heading">
+	    <h3>Input <small>controls</small></h3>
+	  </div>
+	  <div class="panel-body">
+
+	  <div class="btn-group btn-group-justified">
+	    <div class="btn-group">
+	      <button type="button" class="btn btn-default btn-lg">7</button>
+	    </div>
+	    <div class="btn-group">
+	      <button type="button" class="btn btn-default btn-lg">8</button>
+	    </div>
+	    <div class="btn-group">
+	      <button type="button" class="btn btn-default btn-lg">9</button>
+	    </div>
+	  </div>
+	  <div class="btn-group btn-group-justified">
+	    <div class="btn-group">
+	      <button type="button" class="btn btn-default btn-lg">4</button>
+	    </div>
+	    <div class="btn-group">
+	      <button type="button" class="btn btn-default btn-lg">5</button>
+	    </div>
+	    <div class="btn-group">
+	      <button type="button" class="btn btn-default btn-lg">6</button>
+	    </div>
+	  </div>
+	  <div class="btn-group btn-group-justified">
+	    <div class="btn-group">
+	      <button type="button" class="btn btn-default btn-lg">1</button>
+	    </div>
+	    <div class="btn-group">
+	      <button type="button" class="btn btn-default btn-lg">2</button>
+	    </div>
+	    <div class="btn-group">
+	      <button type="button" class="btn btn-default btn-lg">3</button>
+	    </div>
+	  </div>
+
+
+
+	</div>
+      </div>
+
+    </div> 
+  </div>
+
+  <script src="./js/jquery-ui-1.11.4.custom/external/jquery/jquery.js" type="text/javascript" charset="utf-8"></script>
+<script src="./js/jquery-ui-1.11.4.custom/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
   <script src="./js/underscore-min.js" type="text/javascript" charset="utf-8"></script>
   <script src="./js/sodukuClass.js"></script>
   <script src="./js/soduku.js"></script>
+
+</body>
 </html>

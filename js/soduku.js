@@ -1,39 +1,26 @@
-/* jshint strict: true */
 
 (function() {
   "use strict";
 
-  var lightBox = 240;
-  var darkBox = 230;
-  var boxVariance = 5;
+  var inputNumber;
 
   var tbl = document.getElementById("sodukuTable");
   var tblBody = document.createElement("tbody");
   tblBody.setAttribute("id", "tablebody");
 
-  for (var i=0; i < 9; i++) {
+  for (var i = 0; i < 9; i++) {
     var row = document.createElement("tr");
 
-    for (var j=0; j < 9; j++) {
+    for (var j = 0; j < 9; j++) {
 
       var cell = document.createElement("td");
-      //cellText = document.createTextNode(value.toString());
+
       var cellInput = document.createElement("input");
       cellInput.setAttribute("type", "text");
       cellInput.setAttribute("id", i + "," + j);
-      //cellInput.setAttribute("min", 1);
-      //cellInput.setAttribute("max", 9);
-
-      var evenColor = rgbToString(lightBox, lightBox, lightBox);
-      var oddColor = rgbToString(darkBox, darkBox, darkBox);
 
       $(cell).addClass(isEvenBox(i, j) ? 'even' : 'odd');
-      /*
-         if (isEven(i, j)) {
-         var color = cell.style.backgroundColor;
-         cell.style.backgroundColor = makeLighter(color);
-         }
-         */
+
       cell.appendChild(cellInput);
       row.appendChild(cell);
     }
@@ -44,24 +31,39 @@
 
   tbl.appendChild(tblBody);
 
+  $('.numpad').click(function() {
+    $('.numpad').removeClass('highlight');
+    inputNumber = $(this).attr('id');
+    $(this).addClass('highlight');
+  });
+
+  $('input').click(function() {
+    if (inputNumber !== '0') {
+      $(this).val(inputNumber);
+    }
+    $('.numpad').removeClass('highlight');
+    inputNumber = '0';
+  });
+
+
   $("td").hover(
     function() {
-      $(this).addClass('highlight', 1, 'linear');
+      $(this).addClass('highlight');
     },
     function() {
-      $(this).removeClass('highlight', 1, 'linear');
+      $(this).removeClass('highlight');
     }
   );
- /* 
-  $("tr").hover(
-    function() {
-      $(this).addClass('highlight', 1);
-    },
-    function() {
-      $(this).removeClass('highlight', 0.5);
-    }
-  );
-*/
+  /* 
+     $("tr").hover(
+     function() {
+     $(this).addClass('highlight', 1);
+     },
+     function() {
+     $(this).removeClass('highlight', 0.5);
+     }
+     );
+     */
 })();
 
 function isEven(i, j) {
